@@ -22,9 +22,10 @@ class UniqueReview(MRJob):
             # TODO: for each word in the review, yield the correct key,value
             # pair:
         for word in WORD_RE.findall(record['text']):
-            yield [ word , record['review_id'] ] # put the id and the review text in a tuple, remove this, can't subscript a generator, don't need review text
+            yield [ word.lower() , record['review_id'] ] # put the id and the review text in a tuple, remove this, can't subscript a generator, don't need review text
             ##/
 
+    # review_ids is a generator
     def reducer1_count_reviews(self, word, review_ids): # function is applied per entry in the yielded list
         """Count the number of reviews a word has appeared in.  If it is a
         unique word (ie it has only been used in 1 review), output that review
